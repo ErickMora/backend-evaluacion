@@ -69,7 +69,11 @@ export class AreaService {
     }*/
 
     async buscarPorId(idArea: number): Promise<AreaEntity> {
-        return this._areaRepository.findOne(idArea);
+        return this._areaRepository.findOne(idArea, {
+            relations: [
+              'indicadores',
+              'indicadores.preguntas'
+            ]});
     }
 
     async buscarAreaPorNombre(nombre: string): Promise<AreaEntity> {

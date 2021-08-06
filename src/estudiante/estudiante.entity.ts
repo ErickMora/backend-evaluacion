@@ -1,4 +1,6 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import { CursoPorEstudianteEntity } from "src/curso-por-estudiante/curso-por-estudiante.entity";
+import { UsuarioEntity } from "src/usuario/usuario.entity";
+import {Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 
 @Entity('estudiante')
 export class EstudianteEntity {
@@ -8,57 +10,41 @@ export class EstudianteEntity {
 
     @Column(
         {
-            name: 'numCedula',
+            name: 'codigo',
             type: 'varchar',
             length: 15,
+            unique: true
         }
     )
-    numCedula: string;
+    codigo: string;
 
     @Column(
         {
-            name: 'nombre',
-            type: 'varchar',
-            length: 30,
+            name: 'nivel',
+            type: 'int'
         }
     )
-    nombre: string;
-
-    @Column(
-        {
-            name: 'apellido',
-            type: 'varchar',
-            length: 30,
+    nivel: number;
+    
+    @OneToOne(
+        type => UsuarioEntity, 
+        usuario => usuario.estudiante,
+        { 
+            cascade: true, 
+            onDelete: 'CASCADE' 
         }
     )
-    apellido: string;
-
-    @Column(
-        {
-            name: 'telefono',
-            type: 'varchar',
-            length: 20,
+    @JoinColumn(
+        { 
+            name: 'idUsuario' 
         }
     )
-    telefono: string;
+    usuario: UsuarioEntity;
 
-    @Column(
-        {
-            name: 'correo',
-            type: 'varchar',
-            length: 50,
-        }
-    )
-    correo: string;
-
-    @Column(
-        {
-            name: 'direccion',
-            type: 'varchar',
-            length: 100,
-        }
-    )
-    direccion: string;
-
+    @OneToMany(
+        type => CursoPorEstudianteEntity,
+        cursoPorEstudiante => cursoPorEstudiante.estudiante,
+      )
+      cursosPorEstudiante: CursoPorEstudianteEntity[];
 
 }

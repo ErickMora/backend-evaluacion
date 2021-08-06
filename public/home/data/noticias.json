@@ -1,0 +1,25 @@
+{
+	"data": [
+		{
+			"id": "1000",
+			"code": "f230fh0g3",
+			"name": "Evaluación Universidades",
+			"image": "evaluacion-universidades.png",
+			"link": "https://www.caces.gob.ec/evaluacion-de-uep-2020/"
+		},
+		{
+			"id": "1001",
+			"code": "nvklal433",
+			"name": "Evaluacion Institutos Superiores",
+			"image": "evaluacion-institutos-superiores.jpg",
+			"link": "https://www.caces.gob.ec/879-2/"
+		},
+		{
+			"id": "1002",
+			"code": "zz21cz3c1",
+			"name": "Retorno Educación Superior",
+			"image": "retorno-educacion-superior.jpg",
+			"link": "https://www.educacionsuperior.gob.ec/el-24-al-26-de-junio-inicia-el-proceso-de-retorno-a-la-educacion-superior/"
+		}
+	]
+}

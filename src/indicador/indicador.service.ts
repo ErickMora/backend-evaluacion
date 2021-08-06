@@ -66,6 +66,7 @@ export class IndicadorService {
         return this._indicadorRepository.findOne(idIndicador, {
             relations: [
               'area',
+              'preguntas'
             ]});
     }
 

@@ -4,12 +4,11 @@ import { IndicadorEntity } from 'src/indicador/indicador.entity';
 export class PreguntaActualizarDto {
 
     @IsNotEmpty()
-    @IsNumberString()
-    codigo: string;
+    @IsString()
+    nombre: string;
 
     @IsString()
-    @IsNotEmpty()
-    texto: string;
+    descripcion: string;
     
     indicador: IndicadorEntity;
 }

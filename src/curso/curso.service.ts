@@ -69,7 +69,16 @@ export class CursoService {
     }
 
     async buscarPorId(idCurso: number): Promise<CursoEntity> {
-        return this._cursoRepository.findOne(idCurso);
+        return this._cursoRepository.findOne(idCurso, {
+            relations: [
+              'profesor',
+              'profesor.usuario',
+              'materia',
+              'cursosPorEstudiante',
+              'cursosPorEstudiante.curso',
+              'cursosPorEstudiante.estudiante',
+              'cursosPorEstudiante.estudiante.usuario'
+            ]});
     }
 
     async buscarCursoPorCodigo(codigo: string): Promise<CursoEntity> {

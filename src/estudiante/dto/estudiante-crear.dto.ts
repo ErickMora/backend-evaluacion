@@ -1,39 +1,19 @@
-import {IsEmail, IsEmpty, IsNotEmpty, IsNumber, IsString, Length, Matches} from 'class-validator';
+import {IsEmail, IsEmpty, IsNotEmpty, IsNumber, IsNumberString, IsString, Length, Matches} from 'class-validator';
+import { CursoPorEstudianteEntity } from 'src/curso-por-estudiante/curso-por-estudiante.entity';
+import { UsuarioEntity } from 'src/usuario/usuario.entity';
 
 export class EstudianteCrearDto {
 
     @IsNotEmpty()
-    @IsString()
-    nombre: string;
+    @IsNumberString()
+    codigo: string;
 
     @IsNotEmpty()
-    @IsString()
-    apellido: string;
+    @IsNumber()
+    nivel: number;
 
-    @IsNotEmpty()
-    @IsString()
-    @Length(10,15)
-    @Matches(/^[_0-9-]+$/,{
-        message: "El número de cédula debe contener únicamente números"
-    })
-    numCedula: string;
+    cursosPorEstudiante: CursoPorEstudianteEntity[];
 
-    @IsString()
-    @Matches(/^[_0-9-]+$/,{
-        message: "El número de celular debe contener únicamente números"
-    })
-    telefono: string;
-
-    @IsNotEmpty()
-    @IsString()
-    @IsEmail({},{
-        message: "CORREO: formato no valido"
-    })
-    correo: string;
-
-    @IsString()
-    direccion: string;
-
-
+    usuario: UsuarioEntity;
 
 }

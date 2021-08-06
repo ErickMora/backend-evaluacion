@@ -22,15 +22,11 @@ export class ProfesorService {
 
     
     async crearProfesor(profesorCrearDto: ProfesorCrearDto): Promise<ProfesorEntity> {
-        //const { nombre, apellido, numCedula, telefono, direccion, correo } = profesorCrearDto;
+        //const { titulo } = profesorCrearDto;
     
             const nuevoProfesor = new ProfesorEntity();
-            nuevoProfesor.nombre = profesorCrearDto.nombre;
-            nuevoProfesor.apellido = profesorCrearDto.apellido;
-            nuevoProfesor.numCedula = profesorCrearDto.numCedula;
-            nuevoProfesor.telefono = profesorCrearDto.telefono;
-            nuevoProfesor.direccion = profesorCrearDto.direccion;
-            nuevoProfesor.correo = profesorCrearDto.correo;
+            nuevoProfesor.titulo = profesorCrearDto.titulo;  
+            nuevoProfesor.usuario = profesorCrearDto.usuario;           
     
             try {
                 await this._profesorRepository.save(this._profesorRepository.create(nuevoProfesor));
@@ -47,11 +43,10 @@ export class ProfesorService {
         console.log('Profesor actualizado: ', id);
         return this._profesorRepository.update(idProfesor, {
 
-            nombre: profesorActualizarDto.nombre,
-            apellido: profesorActualizarDto.apellido,
-            telefono: profesorActualizarDto.telefono,
-            correo: profesorActualizarDto.correo,
-            direccion: profesorActualizarDto.direccion
+            titulo: profesorActualizarDto.titulo,
+            usuario: profesorActualizarDto.usuario
+            
+            
         });
     }
 
@@ -69,15 +64,27 @@ export class ProfesorService {
     }
 
     async buscarPorId(idProfesor: number): Promise<ProfesorEntity> {
-        return this._profesorRepository.findOne(idProfesor);
+        return this._profesorRepository.findOne(idProfesor, {
+            relations: [
+              'cursos',              
+              'usuario'
+            ]});
     }
 
     async buscarProfesorPorCedula(numCedula: string): Promise<ProfesorEntity> {
-        return this._profesorRepository.findOne(numCedula)
+        return this._profesorRepository.findOne(numCedula, {
+            relations: [
+              'cursos',              
+              'usuario'
+            ]})
     }
 
     async buscarProfesor(numCedula?: string): Promise<ProfesorEntity> {
-        return this._profesorRepository.findOne({where: {cedula: Like(`%${numCedula}%`)}});
+        return this._profesorRepository.findOne({where: {cedula: Like(`%${numCedula}%`)}, 
+            relations: [
+              'cursos',              
+              'usuario'
+            ]});
     }
 
 }
