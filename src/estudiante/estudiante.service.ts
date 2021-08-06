@@ -22,15 +22,12 @@ export class EstudianteService {
 
     
     async crearEstudiante(estudianteCrearDto: EstudianteCrearDto): Promise<EstudianteEntity> {
-        //const { nombre, apellido, numCedula, telefono, direccion, correo } = estudianteCrearDto;
+        //const { codigo, nivel } = estudianteCrearDto;
     
             const nuevoEstudiante = new EstudianteEntity();
-            nuevoEstudiante.nombre = estudianteCrearDto.nombre;
-            nuevoEstudiante.apellido = estudianteCrearDto.apellido;
-            nuevoEstudiante.numCedula = estudianteCrearDto.numCedula;
-            nuevoEstudiante.telefono = estudianteCrearDto.telefono;
-            nuevoEstudiante.direccion = estudianteCrearDto.direccion;
-            nuevoEstudiante.correo = estudianteCrearDto.correo;
+            nuevoEstudiante.codigo = estudianteCrearDto.codigo;
+            nuevoEstudiante.nivel = estudianteCrearDto.nivel;  
+            nuevoEstudiante.usuario = estudianteCrearDto.usuario;           
     
             try {
                 await this._estudianteRepository.save(this._estudianteRepository.create(nuevoEstudiante));
@@ -47,11 +44,9 @@ export class EstudianteService {
         console.log('Estudiante actualizado: ', id);
         return this._estudianteRepository.update(idEstudiante, {
 
-            nombre: estudianteActualizarDto.nombre,
-            apellido: estudianteActualizarDto.apellido,
-            telefono: estudianteActualizarDto.telefono,
-            correo: estudianteActualizarDto.correo,
-            direccion: estudianteActualizarDto.direccion
+            codigo: estudianteActualizarDto.codigo,
+            nivel: estudianteActualizarDto.nivel,
+            usuario: estudianteActualizarDto.usuario
         });
     }
 
@@ -69,26 +64,23 @@ export class EstudianteService {
     }
 
     async buscarPorId(idEstudiante: number): Promise<EstudianteEntity> {
-        return this._estudianteRepository.findOne(idEstudiante);
+        return this._estudianteRepository.findOne(idEstudiante, {
+            relations: [
+              'usuario',
+              'cursosPorEstudiante',
+              'cursosPorEstudiante.curso',
+              'cursosPorEstudiante.estudiante',
+              'cursosPorEstudiante.estudiante.usuario'
+            ],
+          });
     }
 
     async buscarEstudiantePorCedula(numCedula: string): Promise<EstudianteEntity> {
-        return this._estudianteRepository.findOne(numCedula)
+        return this._estudianteRepository.findOne(numCedula);
     }
 
     async buscarEstudiante(numCedula?: string): Promise<EstudianteEntity> {
         return this._estudianteRepository.findOne({where: {cedula: Like(`%${numCedula}%`)}});
     }
-
-//}
-
-    /*
-        buscarUsuario(username: string): Promise<Usuario[]> {
-            return this._usuarioRepository..filter(
-                (usuario)=>{
-                    return usuario.username.includes(username);
-                }
-            );
-        }*/
 
 }

@@ -27,6 +27,7 @@ export class MateriaService {
             nuevoMateria.nombre = materiaCrearDto.nombre;
             nuevoMateria.codigo = materiaCrearDto.codigo;
             nuevoMateria.numHoras = materiaCrearDto.numHoras;
+            nuevoMateria.categoria = materiaCrearDto.categoria;
     
             try {
                 await this._materiaRepository.save(this._materiaRepository.create(nuevoMateria));
@@ -45,7 +46,8 @@ export class MateriaService {
 
             nombre: materiaActualizarDto.nombre,
             codigo: materiaActualizarDto.codigo,
-            numHoras: materiaActualizarDto.numHoras
+            numHoras: materiaActualizarDto.numHoras,
+            categoria: materiaActualizarDto.categoria
         });
     }
 
@@ -63,7 +65,11 @@ export class MateriaService {
     }
 
     async buscarPorId(idMateria: number): Promise<MateriaEntity> {
-        return this._materiaRepository.findOne(idMateria);
+        return this._materiaRepository.findOne(idMateria, {
+            relations: [
+              'cursos',
+              'categoria'
+            ]});
     }
 
     async buscarMateriaPorCodigo(codigo: string): Promise<MateriaEntity> {

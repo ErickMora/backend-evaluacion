@@ -1,6 +1,7 @@
+import { CursoPorEstudianteEntity } from "src/curso-por-estudiante/curso-por-estudiante.entity";
 import { MateriaEntity } from "src/materia/materia.entity";
 import { ProfesorEntity } from "src/profesor/profesor.entity";
-import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 
 @Entity('curso')
 export class CursoEntity {
@@ -74,4 +75,9 @@ export class CursoEntity {
     )
     profesor: ProfesorEntity;
 
+    @OneToMany(
+        type => CursoPorEstudianteEntity,
+        cursoPorEstudiante => cursoPorEstudiante.curso,
+      )
+      cursosPorEstudiante: CursoPorEstudianteEntity[];
 }

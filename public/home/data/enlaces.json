@@ -1,0 +1,25 @@
+{
+	"data": [
+		{
+			"id": "1000",
+			"code": "f230fh0g3",
+			"name": "CES",
+			"image": "ces.jpg",
+			"link": "https://www.ces.gob.ec/"
+		},
+		{
+			"id": "1001",
+			"code": "nvklal433",
+			"name": "CACES",
+			"image": "caces.jpg",
+			"link": "https://www.caces.gob.ec/"
+		},
+		{
+			"id": "1002",
+			"code": "zz21cz3c1",
+			"name": "Educación Superior",
+			"image": "senescyt.jpg",
+			"link": "https://www.educacionsuperior.gob.ec/"
+		}
+	]
+}

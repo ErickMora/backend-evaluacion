@@ -9,21 +9,19 @@ export class PreguntaEntity {
 
     @Column(
         {
-            name: 'codigo',
-            type: 'varchar',
-            length: 15,
-            unique: true
-        }
-    )
-    codigo: string;
-
-    @Column(
-        {
-            name: 'texto',
+            name: 'nombre',
             type: 'varchar'
         }
     )
-    texto: string;
+    nombre: string;
+
+    @Column(
+        {
+            name: 'descripcion',
+            type: 'varchar'
+        }
+    )
+    descripcion: string;
 
     @ManyToOne(
         type => IndicadorEntity, 

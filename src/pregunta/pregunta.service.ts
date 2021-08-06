@@ -24,8 +24,8 @@ export class PreguntaService {
     async crearPregunta(preguntaCrearDto: PreguntaCrearDto): Promise<PreguntaEntity> {
        
             const nuevoPregunta = new PreguntaEntity();
-            nuevoPregunta.codigo = preguntaCrearDto.codigo;
-            nuevoPregunta.texto = preguntaCrearDto.texto;
+            nuevoPregunta.nombre = preguntaCrearDto.nombre;
+            nuevoPregunta.descripcion = preguntaCrearDto.descripcion;
             nuevoPregunta.indicador = preguntaCrearDto.indicador;
             
             try {
@@ -43,8 +43,8 @@ export class PreguntaService {
         console.log('Pregunta actualizado: ', id);
         return this._preguntaRepository.update(idPregunta, {
 
-            codigo: preguntaActualizarDto.codigo,
-            texto: preguntaActualizarDto.texto,
+            nombre: preguntaActualizarDto.nombre,
+            descripcion: preguntaActualizarDto.descripcion,
             indicador: preguntaActualizarDto.indicador
         });
     }
@@ -63,15 +63,18 @@ export class PreguntaService {
     }
 
     async buscarPorId(idPregunta: number): Promise<PreguntaEntity> {
-        return this._preguntaRepository.findOne(idPregunta);
+        return this._preguntaRepository.findOne(idPregunta, {
+            relations: [
+              'indicador'
+            ]});
     }
 
-    async buscarPreguntaPorCodigo(codigo: string): Promise<PreguntaEntity> {
-        return this._preguntaRepository.findOne(codigo)
+    async buscarPreguntaPorNombre(nombre: string): Promise<PreguntaEntity> {
+        return this._preguntaRepository.findOne(nombre)
     }
 
-    async buscarPregunta(codigo?: string): Promise<PreguntaEntity> {
-        return this._preguntaRepository.findOne({where: {codigo: Like(`%${codigo}%`)}});
+    async buscarPregunta(nombre?: string): Promise<PreguntaEntity> {
+        return this._preguntaRepository.findOne({where: {nombre: Like(`%${nombre}%`)}});
     }
 
 }

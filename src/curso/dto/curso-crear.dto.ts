@@ -1,4 +1,5 @@
 import {IsEmail, IsEmpty, IsNotEmpty, IsNumber, IsNumberString, IsString, Length, Matches} from 'class-validator';
+import { CursoPorEstudianteEntity } from 'src/curso-por-estudiante/curso-por-estudiante.entity';
 import { MateriaEntity } from 'src/materia/materia.entity';
 import { ProfesorEntity } from 'src/profesor/profesor.entity';
 
@@ -22,4 +23,6 @@ export class CursoCrearDto {
     materia: MateriaEntity;
 
     profesor: ProfesorEntity;
+
+    cursosPorEstudiante: CursoPorEstudianteEntity[];
 }
