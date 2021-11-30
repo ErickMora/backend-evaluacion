@@ -16,7 +16,7 @@ export class ProfesorService {
     }
 
     async listarProfesores(): Promise<ProfesorEntity[]> {
-        return this._profesorRepository.find();
+        return await this._profesorRepository.find();
 
     }
 
@@ -41,7 +41,7 @@ export class ProfesorService {
 
         const id = idProfesor;
         console.log('Profesor actualizado: ', id);
-        return this._profesorRepository.update(idProfesor, {
+        return await this._profesorRepository.update(idProfesor, {
 
             titulo: profesorActualizarDto.titulo,
             usuario: profesorActualizarDto.usuario
@@ -51,7 +51,7 @@ export class ProfesorService {
     }
 
     async eliminarProfesor(idProfesor: number): Promise<DeleteResult> {
-        return this._profesorRepository.delete(idProfesor);
+        return await this._profesorRepository.delete(idProfesor);
     }
 
     async buscar(consulta: any): Promise<ProfesorEntity[]> {
@@ -60,30 +60,42 @@ export class ProfesorService {
                 consulta.where[atributo] = Like(`%${consulta.where[atributo]}%`);
             });
           }
-        return this._profesorRepository.find(consulta);
+        return await this._profesorRepository.find(consulta);
     }
 
     async buscarPorId(idProfesor: number): Promise<ProfesorEntity> {
-        return this._profesorRepository.findOne(idProfesor, {
+        return await this._profesorRepository.findOne(idProfesor, {
             relations: [
               'cursos',              
-              'usuario'
+              'usuario',
+              'cuestionariosPorUsuario',
+              'cuestionariosPorUsuario.cuestionario',
+              'cuestionariosPorUsuario.usuario',
+              'cuestionariosPorUsuario.profesor'
             ]});
     }
 
     async buscarProfesorPorCedula(numCedula: string): Promise<ProfesorEntity> {
-        return this._profesorRepository.findOne(numCedula, {
+        return await this._profesorRepository.findOne(numCedula, {
             relations: [
               'cursos',              
-              'usuario'
+              'usuario',
+              'cuestionariosPorUsuario',
+              'cuestionariosPorUsuario.cuestionario',
+              'cuestionariosPorUsuario.usuario',
+              'cuestionariosPorUsuario.profesor'
             ]})
     }
 
     async buscarProfesor(numCedula?: string): Promise<ProfesorEntity> {
-        return this._profesorRepository.findOne({where: {cedula: Like(`%${numCedula}%`)}, 
+        return await this._profesorRepository.findOne({where: {cedula: Like(`%${numCedula}%`)}, 
             relations: [
               'cursos',              
-              'usuario'
+              'usuario',
+              'cuestionariosPorUsuario',
+              'cuestionariosPorUsuario.cuestionario',
+              'cuestionariosPorUsuario.usuario',
+              'cuestionariosPorUsuario.profesor'
             ]});
     }
 

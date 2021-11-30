@@ -13,37 +13,37 @@ export class IndicadorController {
     }
 
     @Get('')
-    buscarIndicadores(@Query('consulta') consulta?: any): Promise<IndicadorEntity[]> {
+    async buscarIndicadores(@Query('consulta') consulta?: any): Promise<IndicadorEntity[]> {
         if(consulta){
-            return this._indicadorService.buscar(JSON.parse(consulta));
+            return await this._indicadorService.buscar(JSON.parse(consulta));
         }
         else{
-            return this._indicadorService.listarIndicadores();
+            return await this._indicadorService.listarIndicadores();
         }
     }
     
     @Get('/:id')
-    buscarPorId(@Param('id') id: number): Promise<IndicadorEntity> {
-        return this._indicadorService.buscarPorId(id);
+    async buscarPorId(@Param('id') id: number): Promise<IndicadorEntity> {
+        return await this._indicadorService.buscarPorId(id);
     }
 
     @Post()
-    crearIndicador(@Body() indicadorCrearDto: IndicadorCrearDto): Promise<IndicadorEntity> {
+    async crearIndicador(@Body() indicadorCrearDto: IndicadorCrearDto): Promise<IndicadorEntity> {
         const indicadorCrear = new IndicadorCrearDto();
         Object.keys(indicadorCrearDto).map(atributo => {
             indicadorCrear[atributo] = indicadorCrearDto[atributo];
         });
-        return this._indicadorService.crearIndicador(indicadorCrear);
+        return await this._indicadorService.crearIndicador(indicadorCrear);
     }
 
     @Put('/:id')
-    actualizarIndicador(@Param('id') id: number, @Body() indicadorActualizarDto: IndicadorActualizarDto) {
-        return this._indicadorService.actualizarIndicador(id, indicadorActualizarDto);
+    async actualizarIndicador(@Param('id') id: number, @Body() indicadorActualizarDto: IndicadorActualizarDto) {
+        return await this._indicadorService.actualizarIndicador(id, indicadorActualizarDto);
     }
 
     @Delete('/:id')
-    eliminarIndicador(@Param('id') id: number) {
-        return this._indicadorService.eliminarIndicador(id);
+    async eliminarIndicador(@Param('id') id: number) {
+        return await this._indicadorService.eliminarIndicador(id);
     }
 
     

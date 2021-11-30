@@ -16,7 +16,7 @@ export class MateriaService {
     }
 
     async listarMaterias(): Promise<MateriaEntity[]> {
-        return this._materiaRepository.find();
+        return await this._materiaRepository.find();
 
     }
 
@@ -28,7 +28,8 @@ export class MateriaService {
             nuevoMateria.codigo = materiaCrearDto.codigo;
             nuevoMateria.numHoras = materiaCrearDto.numHoras;
             nuevoMateria.categoria = materiaCrearDto.categoria;
-    
+            nuevoMateria.nivel = materiaCrearDto.nivel;
+
             try {
                 await this._materiaRepository.save(this._materiaRepository.create(nuevoMateria));
             } catch (error) {
@@ -42,17 +43,18 @@ export class MateriaService {
 
         const id = idMateria;
         console.log('Materia actualizado: ', id);
-        return this._materiaRepository.update(idMateria, {
+        return await this._materiaRepository.update(idMateria, {
 
             nombre: materiaActualizarDto.nombre,
             codigo: materiaActualizarDto.codigo,
             numHoras: materiaActualizarDto.numHoras,
-            categoria: materiaActualizarDto.categoria
+            categoria: materiaActualizarDto.categoria,
+            nivel: materiaActualizarDto.nivel
         });
     }
 
     async eliminarMateria(idMateria: number): Promise<DeleteResult> {
-        return this._materiaRepository.delete(idMateria);
+        return await this._materiaRepository.delete(idMateria);
     }
 
     async buscar(consulta: any): Promise<MateriaEntity[]> {
@@ -61,23 +63,24 @@ export class MateriaService {
                 consulta.where[atributo] = Like(`%${consulta.where[atributo]}%`);
             });
           }
-        return this._materiaRepository.find(consulta);
+        return await this._materiaRepository.find(consulta);
     }
 
     async buscarPorId(idMateria: number): Promise<MateriaEntity> {
-        return this._materiaRepository.findOne(idMateria, {
+        return await this._materiaRepository.findOne(idMateria, {
             relations: [
               'cursos',
-              'categoria'
+              'categoria',
+              'nivel'
             ]});
     }
 
     async buscarMateriaPorCodigo(codigo: string): Promise<MateriaEntity> {
-        return this._materiaRepository.findOne(codigo)
+        return await this._materiaRepository.findOne(codigo)
     }
 
     async buscarMateria(codigo?: string): Promise<MateriaEntity> {
-        return this._materiaRepository.findOne({where: {codigo: Like(`%${codigo}%`)}});
+        return await this._materiaRepository.findOne({where: {codigo: Like(`%${codigo}%`)}});
     }
 
 }

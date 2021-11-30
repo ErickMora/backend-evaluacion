@@ -1,6 +1,7 @@
 import {IsEmail, IsEmpty, IsNotEmpty, IsNumber, IsNumberString, IsOptional, IsString, Length, Matches} from 'class-validator';
 import { CategoriaEntity } from 'src/categoria/categoria.entity';
 import { CursoEntity } from 'src/curso/curso.entity';
+import { NivelEntity } from 'src/nivel/nivel.entity';
 
 export class MateriaCrearDto {
 
@@ -20,4 +21,6 @@ export class MateriaCrearDto {
     cursos: CursoEntity[];
 
     categoria: CategoriaEntity;
+
+    nivel: NivelEntity;
 }

@@ -5,6 +5,10 @@ import { PreguntaEntity } from 'src/pregunta/pregunta.entity';
 export class IndicadorActualizarDto {
 
     @IsNotEmpty()
+    @IsNumberString()
+    codigo: string;
+
+    @IsNotEmpty()
     @IsString()
     nombre: string;
 

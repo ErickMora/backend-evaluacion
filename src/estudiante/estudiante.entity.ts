@@ -1,6 +1,7 @@
 import { CursoPorEstudianteEntity } from "src/curso-por-estudiante/curso-por-estudiante.entity";
+import { NivelEntity } from "src/nivel/nivel.entity";
 import { UsuarioEntity } from "src/usuario/usuario.entity";
-import {Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 
 @Entity('estudiante')
 export class EstudianteEntity {
@@ -18,13 +19,20 @@ export class EstudianteEntity {
     )
     codigo: string;
 
-    @Column(
-        {
-            name: 'nivel',
-            type: 'int'
+    @ManyToOne(
+        type => NivelEntity, 
+        nivel => nivel.estudiantes,
+        { 
+            cascade: true, 
+            onDelete: 'CASCADE' 
         }
     )
-    nivel: number;
+    @JoinColumn(
+        { 
+            name: 'idNivel' 
+        }
+    )
+    nivel: NivelEntity;
     
     @OneToOne(
         type => UsuarioEntity, 

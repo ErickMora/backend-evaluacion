@@ -16,7 +16,7 @@ export class UsuarioService {
     }
 
     async listarUsuarios(): Promise<UsuarioEntity[]> {
-        return this._usuarioRepository.find();
+        return await this._usuarioRepository.find();
 
     }
 
@@ -31,6 +31,7 @@ export class UsuarioService {
             nuevoUsuario.direccion = usuarioCrearDto.direccion;
             nuevoUsuario.correo = usuarioCrearDto.correo;
             nuevoUsuario.password = usuarioCrearDto.password;
+            nuevoUsuario.rol = usuarioCrearDto.rol;
     
             try {
                 await this._usuarioRepository.save(this._usuarioRepository.create(nuevoUsuario));
@@ -45,7 +46,7 @@ export class UsuarioService {
 
         const id = idUsuario;
         console.log('Usuario actualizado: ', id);
-        return this._usuarioRepository.update(idUsuario, {
+        return await this._usuarioRepository.update(idUsuario, {
 
             nombre: usuarioActualizarDto.nombre,
             telefono: usuarioActualizarDto.telefono,
@@ -56,7 +57,7 @@ export class UsuarioService {
     }
 
     async eliminarUsuario(idUsuario: number): Promise<DeleteResult> {
-        return this._usuarioRepository.delete(idUsuario);
+        return await this._usuarioRepository.delete(idUsuario);
     }
 
     async buscar(consulta: any): Promise<UsuarioEntity[]> {
@@ -65,24 +66,62 @@ export class UsuarioService {
                 consulta.where[atributo] = Like(`%${consulta.where[atributo]}%`);
             });
           }
-        return this._usuarioRepository.find(consulta);
+        return await this._usuarioRepository.find(consulta);
     }
 
     async buscarPorId(idUsuario: number): Promise<UsuarioEntity> {
-        return this._usuarioRepository.findOne(idUsuario, {
+        return await this._usuarioRepository.findOne(idUsuario, {
             relations: [
               'profesor',              
               'estudiante',
-              'rol'
+              'rol',
+              'cuestionariosPorUsuario',
+              'cuestionariosPorUsuario.cuestionario',
+              'cuestionariosPorUsuario.usuario',
+              'cuestionariosPorUsuario.profesor'
             ]});
     }
 
     async buscarUsuarioPorCedula(numCedula: string): Promise<UsuarioEntity> {
-        return this._usuarioRepository.findOne(numCedula)
+        const consulta: FindOneOptions = {
+            where: {
+                numCedula,
+            },
+            relations: [
+                'profesor',              
+                'estudiante',
+                'rol',
+                'cuestionariosPorUsuario',
+                'cuestionariosPorUsuario.cuestionario',
+                'cuestionariosPorUsuario.usuario',
+                'cuestionariosPorUsuario.profesor'
+              ]
+        };
+
+        return await this._usuarioRepository.findOne(undefined, consulta);
+    }
+
+    async buscarUsuarioPorCorreo(correo: string): Promise<UsuarioEntity> {
+        const consulta: FindOneOptions = {
+            where: {
+              correo,
+            },
+            relations: [
+                'profesor',              
+                'estudiante',
+                'rol',
+                'cuestionariosPorUsuario',
+                'cuestionariosPorUsuario.cuestionario',
+                'cuestionariosPorUsuario.usuario',
+                'cuestionariosPorUsuario.profesor'
+              ]
+        };
+
+        return await this._usuarioRepository.findOne(undefined, consulta);
     }
 
     async buscarUsuario(numCedula?: string): Promise<UsuarioEntity> {
-        return this._usuarioRepository.findOne({where: {cedula: Like(`%${numCedula}%`)}});
+        return await this._usuarioRepository.findOne({where: {cedula: Like(`%${numCedula}%`)}});
     }
 
 }

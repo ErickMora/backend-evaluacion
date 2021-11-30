@@ -1,3 +1,4 @@
+import { CuestionarioPorUsuarioEntity } from "src/cuestionario-por-usuario/cuestionario-por-usuario.entity";
 import { CursoEntity } from "src/curso/curso.entity";
 import { UsuarioEntity } from "src/usuario/usuario.entity";
 import {Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn} from "typeorm";
@@ -38,4 +39,9 @@ export class ProfesorEntity {
     )
     cursos: CursoEntity[];
 
+    @OneToMany(
+        type => CuestionarioPorUsuarioEntity,
+        cuestionarioPorUsuario => cuestionarioPorUsuario.profesor,
+      )
+      cuestionariosPorUsuario: CuestionarioPorUsuarioEntity[];
 }

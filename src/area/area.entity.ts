@@ -9,9 +9,17 @@ export class AreaEntity {
 
     @Column(
         {
+            name: 'codigo',
+            type: 'varchar',
+            unique: true
+        }
+    )
+    codigo: string;
+
+    @Column(
+        {
             name: 'nombre',
             type: 'varchar',
-            length: 30,
             unique: true
         }
     )
@@ -20,8 +28,7 @@ export class AreaEntity {
     @Column(
         {
             name: 'descripcion',
-            type: 'varchar',
-            length: 100,
+            type: 'varchar'
         }
     )
     descripcion: string;

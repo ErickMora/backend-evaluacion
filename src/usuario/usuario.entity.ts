@@ -1,4 +1,5 @@
 
+import { CuestionarioPorUsuarioEntity } from "src/cuestionario-por-usuario/cuestionario-por-usuario.entity";
 import { EstudianteEntity } from "src/estudiante/estudiante.entity";
 import { ProfesorEntity } from "src/profesor/profesor.entity";
 import { RolEntity } from "src/rol/rol.entity";
@@ -23,7 +24,7 @@ export class UsuarioEntity {
         {
             name: 'nombre',
             type: 'varchar',
-            length: 30,
+            length: 50,
         }
     )
     nombre: string;
@@ -91,5 +92,10 @@ export class UsuarioEntity {
     )
     rol: RolEntity;
   
+    @OneToMany(
+        type => CuestionarioPorUsuarioEntity,
+        cuestionarioPorUsuario => cuestionarioPorUsuario.usuario,
+      )
+      cuestionariosPorUsuario: CuestionarioPorUsuarioEntity[];
 
 }

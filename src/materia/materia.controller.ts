@@ -13,33 +13,33 @@ export class MateriaController {
     }
 
     @Get('')
-    buscarMaterias(@Query('consulta') consulta?: any): Promise<MateriaEntity[]> {
+    async buscarMaterias(@Query('consulta') consulta?: any): Promise<MateriaEntity[]> {
         if(consulta){
-            return this._materiaService.buscar(JSON.parse(consulta));
+            return await this._materiaService.buscar(JSON.parse(consulta));
         }
         else{
-            return this._materiaService.listarMaterias();
+            return await this._materiaService.listarMaterias();
         }
     }
 
     @Get('/:id')
-    buscarPorId(@Param('id') id: number): Promise<MateriaEntity> {
-        return this._materiaService.buscarPorId(id);
+    async buscarPorId(@Param('id') id: number): Promise<MateriaEntity> {
+        return await this._materiaService.buscarPorId(id);
     }
 
     @Post()
-    crearMateria(@Body() materiaCrearDto: MateriaCrearDto): Promise<MateriaEntity> {
-        return this._materiaService.crearMateria(materiaCrearDto);
+    async crearMateria(@Body() materiaCrearDto: MateriaCrearDto): Promise<MateriaEntity> {
+        return await this._materiaService.crearMateria(materiaCrearDto);
     }
 
     @Put('/:id')
-    actualizarMateria(@Param('id') id: number, @Body() materiaActualizarDto: MateriaActualizarDto) {
-        return this._materiaService.actualizarMateria(id, materiaActualizarDto);
+    async actualizarMateria(@Param('id') id: number, @Body() materiaActualizarDto: MateriaActualizarDto) {
+        return await this._materiaService.actualizarMateria(id, materiaActualizarDto);
     }
 
     @Delete('/:id')
-    eliminarMateria(@Param('id') id: number) {
-        return this._materiaService.eliminarMateria(id);
+    async eliminarMateria(@Param('id') id: number) {
+        return await this._materiaService.eliminarMateria(id);
     }
 
     

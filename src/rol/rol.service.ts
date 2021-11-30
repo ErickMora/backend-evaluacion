@@ -16,7 +16,7 @@ export class RolService {
     }
 
     async listarRoles(): Promise<RolEntity[]> {
-        return this._rolRepository.find();
+        return await this._rolRepository.find();
 
     }
 
@@ -40,13 +40,13 @@ export class RolService {
 
         const id = idRol;
         console.log('Rol actualizado: ', id);
-        return this._rolRepository.update(idRol, {
+        return await this._rolRepository.update(idRol, {
             nombre: rolActualizarDto.nombre,
         });
     }
 
     async eliminarRol(idRol: number): Promise<DeleteResult> {
-        return this._rolRepository.delete(idRol);
+        return await this._rolRepository.delete(idRol);
     }
 
     async buscar(consulta: any): Promise<RolEntity[]> {
@@ -55,22 +55,22 @@ export class RolService {
                 consulta.where[atributo] = Like(`%${consulta.where[atributo]}%`);
             });
           }
-        return this._rolRepository.find(consulta);
+        return await this._rolRepository.find(consulta);
     }
 
     async buscarPorId(idRol: number): Promise<RolEntity> {
-        return this._rolRepository.findOne(idRol, {
+        return await this._rolRepository.findOne(idRol, {
             relations: [
               'usuarios'
             ]});
     }
 
     async buscarRolPorNombre(nombre: string): Promise<RolEntity> {
-        return this._rolRepository.findOne(nombre)
+        return await this._rolRepository.findOne(nombre)
     }
 
     async buscarRol(nombre?: string): Promise<RolEntity> {
-        return this._rolRepository.findOne({where: {nombre: Like(`%${nombre}%`)}});
+        return await this._rolRepository.findOne({where: {nombre: Like(`%${nombre}%`)}});
     }
 
 }

@@ -13,33 +13,33 @@ export class RolController {
     }
 
     @Get('')
-    buscarRoles(@Query('consulta') consulta?: any): Promise<RolEntity[]> {
+    async buscarRoles(@Query('consulta') consulta?: any): Promise<RolEntity[]> {
         if(consulta){
-            return this._rolService.buscar(JSON.parse(consulta));
+            return await this._rolService.buscar(JSON.parse(consulta));
         }
         else{
-            return this._rolService.listarRoles();
+            return await this._rolService.listarRoles();
         }
     }
 
     @Get('/:id')
-    buscarPorId(@Param('id') id: number): Promise<RolEntity> {
-        return this._rolService.buscarPorId(id);
+    async buscarPorId(@Param('id') id: number): Promise<RolEntity> {
+        return await this._rolService.buscarPorId(id);
     }
 
     @Post()
-    crearRol(@Body() rolCrearDto: RolCrearDto): Promise<RolEntity> {
-        return this._rolService.crearRol(rolCrearDto);
+    async crearRol(@Body() rolCrearDto: RolCrearDto): Promise<RolEntity> {
+        return await this._rolService.crearRol(rolCrearDto);
     }
 
     @Put('/:id')
-    actualizarRol(@Param('id') id: number, @Body() rolActualizarDto: RolActualizarDto) {
-        return this._rolService.actualizarRol(id, rolActualizarDto);
+    async actualizarRol(@Param('id') id: number, @Body() rolActualizarDto: RolActualizarDto) {
+        return await this._rolService.actualizarRol(id, rolActualizarDto);
     }
 
     @Delete('/:id')
-    eliminarRol(@Param('id') id: number) {
-        return this._rolService.eliminarRol(id);
+    async eliminarRol(@Param('id') id: number) {
+        return await this._rolService.eliminarRol(id);
     }
 
     

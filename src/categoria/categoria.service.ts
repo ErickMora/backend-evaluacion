@@ -16,7 +16,7 @@ export class CategoriaService {
     }
 
     async listarCategorias(): Promise<CategoriaEntity[]> {
-        return this._categoriaRepository.find();
+        return await this._categoriaRepository.find();
 
     }
 
@@ -39,14 +39,14 @@ export class CategoriaService {
 
         const id = idCategoria;
         console.log('Categoria actualizado: ', id);
-        return this._categoriaRepository.update(idCategoria, {
+        return await this._categoriaRepository.update(idCategoria, {
 
             nombre: categoriaActualizarDto.nombre
         });
     }
 
     async eliminarCategoria(idCategoria: number): Promise<DeleteResult> {
-        return this._categoriaRepository.delete(idCategoria);
+        return await this._categoriaRepository.delete(idCategoria);
     }
 
     async buscar(consulta: any): Promise<CategoriaEntity[]> {
@@ -55,22 +55,22 @@ export class CategoriaService {
                 consulta.where[atributo] = Like(`%${consulta.where[atributo]}%`);
             });
           }
-        return this._categoriaRepository.find(consulta);
+        return await this._categoriaRepository.find(consulta);
     }
 
     async buscarPorId(idCategoria: number): Promise<CategoriaEntity> {
-        return this._categoriaRepository.findOne(idCategoria, {
+        return await this._categoriaRepository.findOne(idCategoria, {
             relations: [
               'materias'
             ]});
     }
 
     async buscarCategoriaPorNombre(nombre: string): Promise<CategoriaEntity> {
-        return this._categoriaRepository.findOne(nombre)
+        return await this._categoriaRepository.findOne(nombre)
     }
 
     async buscarCategoria(nombre?: string): Promise<CategoriaEntity> {
-        return this._categoriaRepository.findOne({where: {nombre: Like(`%${nombre}%`)}});
+        return await this._categoriaRepository.findOne({where: {nombre: Like(`%${nombre}%`)}});
     }
 
 }

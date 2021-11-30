@@ -1,5 +1,6 @@
 import { CategoriaEntity } from "src/categoria/categoria.entity";
 import { CursoEntity } from "src/curso/curso.entity";
+import { NivelEntity } from "src/nivel/nivel.entity";
 import {Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 
 @Entity('materia')
@@ -22,7 +23,7 @@ export class MateriaEntity {
         {
             name: 'nombre',
             type: 'varchar',
-            length: 30
+            length: 100
         }
     )
     nombre: string;
@@ -55,4 +56,19 @@ export class MateriaEntity {
         }
     )
     categoria: CategoriaEntity;
+
+    @ManyToOne(
+        type => NivelEntity, 
+        nivel => nivel.materias, 
+        { 
+            cascade: true, 
+            onDelete: 'CASCADE' 
+        }
+    )
+    @JoinColumn(
+        { 
+            name: 'idNivel' 
+        }
+    )
+    nivel: NivelEntity;
 }

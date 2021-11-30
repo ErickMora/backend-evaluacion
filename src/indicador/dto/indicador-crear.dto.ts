@@ -4,6 +4,10 @@ import { AreaEntity } from 'src/area/area.entity';
 export class IndicadorCrearDto {
 
     @IsNotEmpty()
+    @IsNumberString()
+    codigo: string;
+    
+    @IsNotEmpty()
     @IsString()
     nombre: string;
 

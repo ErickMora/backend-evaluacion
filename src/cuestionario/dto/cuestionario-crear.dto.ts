@@ -1,4 +1,7 @@
 import {IsEmail, IsEmpty, IsEnum, IsNotEmpty, IsNumber, IsNumberString, IsString, Length, Matches} from 'class-validator';
+import { CuestionarioPorUsuarioEntity } from 'src/cuestionario-por-usuario/cuestionario-por-usuario.entity';
+import { PeriodoEntity } from 'src/periodo/periodo.entity';
+import { PreguntaPorCuestionarioEntity } from 'src/pregunta-por-cuestinario/pregunta-por-cuestionario.entity';
 
 export class CuestionarioCrearDto {
 
@@ -10,6 +13,9 @@ export class CuestionarioCrearDto {
     @IsString()
     titulo: string;
 
+    @IsString()
+    informacion: string;
+
     @IsNotEmpty()
     @IsString()
     tipo: string;
@@ -20,7 +26,10 @@ export class CuestionarioCrearDto {
     @IsEnum([0, 1])
     estado: number;
 
-    //materia: MateriaEntity;
+    periodo: PeriodoEntity;
 
-    //cursosPorEstudiante: CursoPorEstudianteEntity[];
+    preguntasPorCuestionario: PreguntaPorCuestionarioEntity[];
+
+    cuestionariosPorUsuario: CuestionarioPorUsuarioEntity[];
+
 }

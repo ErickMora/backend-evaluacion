@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import {TypeOrmModule} from '@nestjs/typeorm';
+import { AreaEntity } from 'src/area/area.entity';
 import { IndicadorController } from './indicador.controller';
 import { IndicadorEntity } from './indicador.entity';
 import { IndicadorService } from './indicador.service';
@@ -8,7 +9,8 @@ import { IndicadorService } from './indicador.service';
     imports: [
         TypeOrmModule
             .forFeature([
-                IndicadorEntity
+                IndicadorEntity,
+                AreaEntity
             ])
     ],
     controllers:[

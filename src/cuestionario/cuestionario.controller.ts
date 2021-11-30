@@ -13,33 +13,33 @@ export class CuestionarioController {
     }
 
     @Get('')
-    buscarCuestionarios(@Query('consulta') consulta?: any): Promise<CuestionarioEntity[]> {
+    async buscarCuestionarios(@Query('consulta') consulta?: any): Promise<CuestionarioEntity[]> {
         if(consulta){
-            return this._cuestionarioService.buscar(JSON.parse(consulta));
+            return await this._cuestionarioService.buscar(JSON.parse(consulta));
         }
         else{
-            return this._cuestionarioService.listarCuestionarios();
+            return await this._cuestionarioService.listarCuestionarios();
         }
     }
 
     @Get('/:id')
-    buscarPorId(@Param('id') id: number): Promise<CuestionarioEntity> {
-        return this._cuestionarioService.buscarPorId(id);
+    async buscarPorId(@Param('id') id: number): Promise<CuestionarioEntity> {
+        return await this._cuestionarioService.buscarPorId(id);
     }
 
     @Post()
-    crearCuestionario(@Body() cuestionarioCrearDto: CuestionarioCrearDto): Promise<CuestionarioEntity> {
-        return this._cuestionarioService.crearCuestionario(cuestionarioCrearDto);
+    async crearCuestionario(@Body() cuestionarioCrearDto: CuestionarioCrearDto): Promise<CuestionarioEntity> {
+        return await this._cuestionarioService.crearCuestionario(cuestionarioCrearDto);
     }
 
     @Put('/:id')
-    actualizarCuestionario(@Param('id') id: number, @Body() cuestionarioActualizarDto: CuestionarioActualizarDto) {
-        return this._cuestionarioService.actualizarCuestionario(id, cuestionarioActualizarDto);
+    async actualizarCuestionario(@Param('id') id: number, @Body() cuestionarioActualizarDto: CuestionarioActualizarDto) {
+        return await this._cuestionarioService.actualizarCuestionario(id, cuestionarioActualizarDto);
     }
 
     @Delete('/:id')
-    eliminarCuestionario(@Param('id') id: number) {
-        return this._cuestionarioService.eliminarCuestionario(id);
+    async eliminarCuestionario(@Param('id') id: number) {
+        return await this._cuestionarioService.eliminarCuestionario(id);
     }
 
     

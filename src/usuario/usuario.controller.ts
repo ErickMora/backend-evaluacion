@@ -13,33 +13,34 @@ export class UsuarioController {
     }
 
     @Get('')
-    buscarUsuarios(@Query('consulta') consulta?: any): Promise<UsuarioEntity[]> {
+    async buscarUsuarios(@Query('consulta') consulta?: any): Promise<UsuarioEntity[]> {
+        //return this._usuarioService.buscar(JSON.parse(consulta));
         if(consulta){
-            return this._usuarioService.buscar(JSON.parse(consulta));
+            return await this._usuarioService.buscar(JSON.parse(consulta));
         }
         else{
-            return this._usuarioService.listarUsuarios();
+            return await this._usuarioService.listarUsuarios();
         }
     }
 
     @Get('/:id')
-    buscarPorId(@Param('id') id: number): Promise<UsuarioEntity> {
-        return this._usuarioService.buscarPorId(id);
+    async buscarPorId(@Param('id') id: number): Promise<UsuarioEntity> {
+        return await this._usuarioService.buscarPorId(id);
     }
 
     @Post()
-    crearUsuario(@Body() usuarioCrearDto: UsuarioCrearDto): Promise<UsuarioEntity> {
-        return this._usuarioService.crearUsuario(usuarioCrearDto);
+    async crearUsuario(@Body() usuarioCrearDto: UsuarioCrearDto): Promise<UsuarioEntity> {
+        return await this._usuarioService.crearUsuario(usuarioCrearDto);
     }
 
     @Put('/:id')
-    actualizarUsuario(@Param('id') id: number, @Body() usuarioActualizarDto: UsuarioActualizarDto) {
-        return this._usuarioService.actualizarUsuario(id, usuarioActualizarDto);
+    async actualizarUsuario(@Param('id') id: number, @Body() usuarioActualizarDto: UsuarioActualizarDto) {
+        return await this._usuarioService.actualizarUsuario(id, usuarioActualizarDto);
     }
 
     @Delete('/:id')
-    eliminarUsuario(@Param('id') id: number) {
-        return this._usuarioService.eliminarUsuario(id);
+    async eliminarUsuario(@Param('id') id: number) {
+        return await this._usuarioService.eliminarUsuario(id);
     }
 
     

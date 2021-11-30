@@ -18,39 +18,39 @@ export class AreaController {
     }*/
 
     @Get('')
-    buscarArea(@Query('consulta') consulta?: any): Promise<AreaEntity[]> {
+    async buscarArea(@Query('consulta') consulta?: any): Promise<AreaEntity[]> {
         console.log('consulta: ', consulta);
         if(consulta){
-            return this._areaService.buscar(JSON.parse(consulta));
+            return await this._areaService.buscar(JSON.parse(consulta));
         }
         else{
-            return this._areaService.listarAreas();
+            return await this._areaService.listarAreas();
         }
     }
 
     @Get('/:id')
-    buscarPorId(@Param('id') id: number): Promise<AreaEntity> {
-        return this._areaService.buscarPorId(id);
+    async buscarPorId(@Param('id') id: number): Promise<AreaEntity> {
+        return await this._areaService.buscarPorId(id);
     }
 
     @Post()
-    crearArea(@Body() areaCrearDto: AreaCrearDto): Promise<AreaEntity> {
+    async crearArea(@Body() areaCrearDto: AreaCrearDto): Promise<AreaEntity> {
         const areaCrear = new AreaCrearDto();
         Object.keys(areaCrearDto).map(atributo => {
             areaCrear[atributo] = areaCrearDto[atributo];
         });
-        return this._areaService.crearArea(areaCrear);
+        return await this._areaService.crearArea(areaCrear);
 
     }
 
     @Put('/:id')
-    actualizarArea(@Param('id') id: number, @Body() areaActualizarDto: AreaActualizarDto) {
-        return this._areaService.actualizarArea(id, areaActualizarDto);
+    async actualizarArea(@Param('id') id: number, @Body() areaActualizarDto: AreaActualizarDto) {
+        return await this._areaService.actualizarArea(id, areaActualizarDto);
     }
 
     @Delete('/:id')
-    eliminarArea(@Param('id') id: number) {
-        return this._areaService.eliminarArea(id);
+    async eliminarArea(@Param('id') id: number) {
+        return await this._areaService.eliminarArea(id);
     }
 
     

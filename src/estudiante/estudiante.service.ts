@@ -16,13 +16,12 @@ export class EstudianteService {
     }
 
     async listarEstudiantes(): Promise<EstudianteEntity[]> {
-        return this._estudianteRepository.find();
+        return await this._estudianteRepository.find();
 
     }
 
     
     async crearEstudiante(estudianteCrearDto: EstudianteCrearDto): Promise<EstudianteEntity> {
-        //const { codigo, nivel } = estudianteCrearDto;
     
             const nuevoEstudiante = new EstudianteEntity();
             nuevoEstudiante.codigo = estudianteCrearDto.codigo;
@@ -42,7 +41,7 @@ export class EstudianteService {
 
         const id = idEstudiante;
         console.log('Estudiante actualizado: ', id);
-        return this._estudianteRepository.update(idEstudiante, {
+        return await this._estudianteRepository.update(idEstudiante, {
 
             codigo: estudianteActualizarDto.codigo,
             nivel: estudianteActualizarDto.nivel,
@@ -51,7 +50,7 @@ export class EstudianteService {
     }
 
     async eliminarEstudiante(idEstudiante: number): Promise<DeleteResult> {
-        return this._estudianteRepository.delete(idEstudiante);
+        return await this._estudianteRepository.delete(idEstudiante);
     }
 
     async buscar(consulta: any): Promise<EstudianteEntity[]> {
@@ -60,13 +59,14 @@ export class EstudianteService {
                 consulta.where[atributo] = Like(`%${consulta.where[atributo]}%`);
             });
           }
-        return this._estudianteRepository.find(consulta);
+        return await this._estudianteRepository.find(consulta);
     }
 
     async buscarPorId(idEstudiante: number): Promise<EstudianteEntity> {
-        return this._estudianteRepository.findOne(idEstudiante, {
+        return await this._estudianteRepository.findOne(idEstudiante, {
             relations: [
               'usuario',
+              'nivel',
               'cursosPorEstudiante',
               'cursosPorEstudiante.curso',
               'cursosPorEstudiante.estudiante',
@@ -76,11 +76,11 @@ export class EstudianteService {
     }
 
     async buscarEstudiantePorCedula(numCedula: string): Promise<EstudianteEntity> {
-        return this._estudianteRepository.findOne(numCedula);
+        return await this._estudianteRepository.findOne(numCedula);
     }
 
     async buscarEstudiante(numCedula?: string): Promise<EstudianteEntity> {
-        return this._estudianteRepository.findOne({where: {cedula: Like(`%${numCedula}%`)}});
+        return await this._estudianteRepository.findOne({where: {cedula: Like(`%${numCedula}%`)}});
     }
 
 }

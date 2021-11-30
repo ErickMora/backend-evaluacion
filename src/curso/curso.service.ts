@@ -16,7 +16,7 @@ export class CursoService {
     }
 
     async listarCursos(): Promise<CursoEntity[]> {
-        return this._cursoRepository.find();
+        return await this._cursoRepository.find();
 
     }
 
@@ -27,7 +27,6 @@ export class CursoService {
             nuevoCurso.nombre = cursoCrearDto.nombre;
             nuevoCurso.codigo = cursoCrearDto.codigo;
             nuevoCurso.periodo = cursoCrearDto.periodo;
-            nuevoCurso.capacidad = cursoCrearDto.capacidad;
             nuevoCurso.materia = cursoCrearDto.materia;
             nuevoCurso.profesor = cursoCrearDto.profesor;
     
@@ -44,19 +43,18 @@ export class CursoService {
 
         const id = idCurso;
         console.log('Curso actualizado: ', id);
-        return this._cursoRepository.update(idCurso, {
+        return await this._cursoRepository.update(idCurso, {
 
             nombre: cursoActualizarDto.nombre,
             codigo: cursoActualizarDto.codigo,
             periodo: cursoActualizarDto.periodo,
-            capacidad: cursoActualizarDto.capacidad,
             materia: cursoActualizarDto.materia,
             profesor: cursoActualizarDto.profesor
         });
     }
 
     async eliminarCurso(idCurso: number): Promise<DeleteResult> {
-        return this._cursoRepository.delete(idCurso);
+        return await this._cursoRepository.delete(idCurso);
     }
 
     async buscar(consulta: any): Promise<CursoEntity[]> {
@@ -65,28 +63,34 @@ export class CursoService {
                 consulta.where[atributo] = Like(`%${consulta.where[atributo]}%`);
             });
           }
-        return this._cursoRepository.find(consulta);
+        return await this._cursoRepository.find(consulta);
     }
 
     async buscarPorId(idCurso: number): Promise<CursoEntity> {
-        return this._cursoRepository.findOne(idCurso, {
+        return await this._cursoRepository.findOne(idCurso, {
             relations: [
+              'periodo',
               'profesor',
               'profesor.usuario',
               'materia',
               'cursosPorEstudiante',
               'cursosPorEstudiante.curso',
               'cursosPorEstudiante.estudiante',
-              'cursosPorEstudiante.estudiante.usuario'
+              'cursosPorEstudiante.estudiante.usuario',
+              'cuestionariosPorUsuario',
+              'cuestionariosPorUsuario.cuestionario',
+              'cuestionariosPorUsuario.usuario',
+              'cuestionariosPorUsuario.profesor',
+              'cuestionariosPorUsuario.curso',
             ]});
     }
 
     async buscarCursoPorCodigo(codigo: string): Promise<CursoEntity> {
-        return this._cursoRepository.findOne(codigo)
+        return await this._cursoRepository.findOne(codigo)
     }
 
     async buscarCurso(codigo?: string): Promise<CursoEntity> {
-        return this._cursoRepository.findOne({where: {codigo: Like(`%${codigo}%`)}});
+        return await this._cursoRepository.findOne({where: {codigo: Like(`%${codigo}%`)}});
     }
 
 }

@@ -10,9 +10,17 @@ export class IndicadorEntity {
 
     @Column(
         {
+            name: 'codigo',
+            type: 'varchar',
+            unique: true
+        }
+    )
+    codigo: string;
+
+    @Column(
+        {
             name: 'nombre',
             type: 'varchar',
-            length: 50,
             unique: true
         }
     )

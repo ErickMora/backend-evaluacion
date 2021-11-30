@@ -13,33 +13,33 @@ export class PreguntaController {
     }
 
     @Get('')
-    buscarPreguntas(@Query('consulta') consulta?: any): Promise<PreguntaEntity[]> {
+    async buscarPreguntas(@Query('consulta') consulta?: any): Promise<PreguntaEntity[]> {
         if(consulta){
-            return this._preguntaService.buscar(JSON.parse(consulta));
+            return await this._preguntaService.buscar(JSON.parse(consulta));
         }
         else{
-            return this._preguntaService.listarPreguntas();
+            return await this._preguntaService.listarPreguntas();
         }
     }
 
     @Get('/:id')
-    buscarPorId(@Param('id') id: number): Promise<PreguntaEntity> {
-        return this._preguntaService.buscarPorId(id);
+    async buscarPorId(@Param('id') id: number): Promise<PreguntaEntity> {
+        return await this._preguntaService.buscarPorId(id);
     }
 
     @Post()
-    crearPregunta(@Body() preguntaCrearDto: PreguntaCrearDto): Promise<PreguntaEntity> {
-        return this._preguntaService.crearPregunta(preguntaCrearDto);
+    async crearPregunta(@Body() preguntaCrearDto: PreguntaCrearDto): Promise<PreguntaEntity> {
+        return await this._preguntaService.crearPregunta(preguntaCrearDto);
     }
 
     @Put('/:id')
-    actualizarPregunta(@Param('id') id: number, @Body() preguntaActualizarDto: PreguntaActualizarDto) {
-        return this._preguntaService.actualizarPregunta(id, preguntaActualizarDto);
+    async actualizarPregunta(@Param('id') id: number, @Body() preguntaActualizarDto: PreguntaActualizarDto) {
+        return await this._preguntaService.actualizarPregunta(id, preguntaActualizarDto);
     }
 
     @Delete('/:id')
-    eliminarPregunta(@Param('id') id: number) {
-        return this._preguntaService.eliminarPregunta(id);
+    async eliminarPregunta(@Param('id') id: number) {
+        return await this._preguntaService.eliminarPregunta(id);
     }
 
     

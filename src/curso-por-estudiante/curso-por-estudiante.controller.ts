@@ -11,33 +11,33 @@ export class CursoPorEstudianteController {
     }
 
     @Get('')
-    buscarCursosPorEstudiante(@Query('consulta') consulta?: any): Promise<CursoPorEstudianteEntity[]> {
+    async buscarCursosPorEstudiante(@Query('consulta') consulta?: any): Promise<CursoPorEstudianteEntity[]> {
         if(consulta){
-            return this._cursoPorEstudianteService.buscar(JSON.parse(consulta));
+            return await this._cursoPorEstudianteService.buscar(JSON.parse(consulta));
         }
         else{
-            return this._cursoPorEstudianteService.listarCursosPorEstudiante();
+            return await this._cursoPorEstudianteService.listarCursosPorEstudiante();
         }
     }
 
     @Get('/:id')
-    buscarPorId(@Param('id') id: number): Promise<CursoPorEstudianteEntity> {
-        return this._cursoPorEstudianteService.buscarPorId(id);
+    async buscarPorId(@Param('id') id: number): Promise<CursoPorEstudianteEntity> {
+        return await this._cursoPorEstudianteService.buscarPorId(id);
     }
 
     @Post()
-    crearCursoPorEstudiante(@Body() cursoPorEstudianteCrearDto: CursoPorEstudianteCrearDto): Promise<CursoPorEstudianteEntity> {
-        return this._cursoPorEstudianteService.crearCursoPorEstudiante(cursoPorEstudianteCrearDto);
+    async crearCursoPorEstudiante(@Body() cursoPorEstudianteCrearDto: CursoPorEstudianteCrearDto): Promise<CursoPorEstudianteEntity> {
+        return await this._cursoPorEstudianteService.crearCursoPorEstudiante(cursoPorEstudianteCrearDto);
     }
 
     @Put('/:id')
-    actualizarCursoPorEstudiante(@Param('id') id: number, @Body() cursoPorEstudianteActualizarDto: CursoPorEstudianteActualizarDto) {
-        return this._cursoPorEstudianteService.actualizarCursoPorEstudiante(id, cursoPorEstudianteActualizarDto);
+    async actualizarCursoPorEstudiante(@Param('id') id: number, @Body() cursoPorEstudianteActualizarDto: CursoPorEstudianteActualizarDto) {
+        return await this._cursoPorEstudianteService.actualizarCursoPorEstudiante(id, cursoPorEstudianteActualizarDto);
     }
 
     @Delete('/:id')
-    eliminarCursoPorEstudiante(@Param('id') id: number) {
-        return this._cursoPorEstudianteService.eliminarCursoPorEstudiante(id);
+    async eliminarCursoPorEstudiante(@Param('id') id: number) {
+        return await this._cursoPorEstudianteService.eliminarCursoPorEstudiante(id);
     }
 
     

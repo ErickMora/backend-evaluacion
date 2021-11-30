@@ -16,7 +16,7 @@ export class CursoPorEstudianteService {
     }
 
     async listarCursosPorEstudiante(): Promise<CursoPorEstudianteEntity[]> {
-        return this._cursoPorEstudianteRepository.find();
+        return await this._cursoPorEstudianteRepository.find();
 
     }
 
@@ -40,14 +40,14 @@ export class CursoPorEstudianteService {
 
         const id = idCursoPorEstudiante;
         console.log('Curso Por Estudiante actualizado: ', id);
-        return this._cursoPorEstudianteRepository.update(idCursoPorEstudiante, {
+        return await this._cursoPorEstudianteRepository.update(idCursoPorEstudiante, {
             curso: cursoPorEstudianteActualizarDto.curso,
             estudiante: cursoPorEstudianteActualizarDto.estudiante
         });
     }
 
     async eliminarCursoPorEstudiante(idCursoPorEstudiante: number): Promise<DeleteResult> {
-        return this._cursoPorEstudianteRepository.delete(idCursoPorEstudiante);
+        return await this._cursoPorEstudianteRepository.delete(idCursoPorEstudiante);
     }
 
     async buscar(consulta: any): Promise<CursoPorEstudianteEntity[]> {
@@ -56,11 +56,11 @@ export class CursoPorEstudianteService {
                 consulta.where[atributo] = Like(`%${consulta.where[atributo]}%`);
             });
           }
-        return this._cursoPorEstudianteRepository.find(consulta);
+        return await this._cursoPorEstudianteRepository.find(consulta);
     }
 
     async buscarPorId(idCursoPorEstudiante: number): Promise<CursoPorEstudianteEntity> {
-        return this._cursoPorEstudianteRepository.findOne(idCursoPorEstudiante, {
+        return await this._cursoPorEstudianteRepository.findOne(idCursoPorEstudiante, {
             relations: [
               'curso',
               'estudiante',

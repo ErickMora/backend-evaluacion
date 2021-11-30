@@ -1,4 +1,5 @@
 import {IsEmail, IsEmpty, IsNotEmpty, IsNumber, IsOptional, IsString, Length, Matches} from 'class-validator';
+import { CuestionarioPorUsuarioEntity } from 'src/cuestionario-por-usuario/cuestionario-por-usuario.entity';
 import { EstudianteEntity } from 'src/estudiante/estudiante.entity';
 import { ProfesorEntity } from 'src/profesor/profesor.entity';
 import { RolEntity } from 'src/rol/rol.entity';
@@ -46,4 +47,5 @@ export class UsuarioCrearDto {
 
     rol: RolEntity;
 
+    cuestionariosPorUsuario: CuestionarioPorUsuarioEntity[];
 }

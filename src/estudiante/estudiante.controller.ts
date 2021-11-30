@@ -13,33 +13,33 @@ export class EstudianteController {
     }
 
     @Get('')
-    buscarEstudiantes(@Query('consulta') consulta?: any): Promise<EstudianteEntity[]> {
+    async buscarEstudiantes(@Query('consulta') consulta?: any): Promise<EstudianteEntity[]> {
         if(consulta){
-            return this._estudianteService.buscar(JSON.parse(consulta));
+            return await this._estudianteService.buscar(JSON.parse(consulta));
         }
         else{
-            return this._estudianteService.listarEstudiantes();
+            return await this._estudianteService.listarEstudiantes();
         }
     }
 
     @Get('/:id')
-    buscarPorId(@Param('id') id: number): Promise<EstudianteEntity> {
-        return this._estudianteService.buscarPorId(id);
+    async buscarPorId(@Param('id') id: number): Promise<EstudianteEntity> {
+        return await this._estudianteService.buscarPorId(id);
     }
 
     @Post()
-    crearEstudiante(@Body() estudianteCrearDto: EstudianteCrearDto): Promise<EstudianteEntity> {
-        return this._estudianteService.crearEstudiante(estudianteCrearDto);
+    async crearEstudiante(@Body() estudianteCrearDto: EstudianteCrearDto): Promise<EstudianteEntity> {
+        return await this._estudianteService.crearEstudiante(estudianteCrearDto);
     }
 
     @Put('/:id')
-    actualizarEstudiante(@Param('id') id: number, @Body() estudianteActualizarDto: EstudianteActualizarDto) {
-        return this._estudianteService.actualizarEstudiante(id, estudianteActualizarDto);
+    async actualizarEstudiante(@Param('id') id: number, @Body() estudianteActualizarDto: EstudianteActualizarDto) {
+        return await this._estudianteService.actualizarEstudiante(id, estudianteActualizarDto);
     }
 
     @Delete('/:id')
-    eliminarEstudiante(@Param('id') id: number) {
-        return this._estudianteService.eliminarEstudiante(id);
+    async eliminarEstudiante(@Param('id') id: number) {
+        return await this._estudianteService.eliminarEstudiante(id);
     }
 
     

@@ -4,6 +4,10 @@ import { IndicadorEntity } from 'src/indicador/indicador.entity';
 export class AreaActualizarDto {
 
     @IsNotEmpty()
+    @IsNumberString()
+    codigo: string;
+    
+    @IsNotEmpty()
     @IsString()
     nombre: string;
 

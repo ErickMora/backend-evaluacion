@@ -13,37 +13,37 @@ export class CategoriaController {
     }
 
     @Get('')
-    buscarCategorias(@Query('consulta') consulta?: any): Promise<CategoriaEntity[]> {
+    async buscarCategorias(@Query('consulta') consulta?: any): Promise<CategoriaEntity[]> {
         if(consulta){
-            return this._categoriaService.buscar(JSON.parse(consulta));
+            return await this._categoriaService.buscar(JSON.parse(consulta));
         }
         else{
-            return this._categoriaService.listarCategorias();
+            return await this._categoriaService.listarCategorias();
         }
     }
     
     @Get('/:id')
-    buscarPorId(@Param('id') id: number): Promise<CategoriaEntity> {
-        return this._categoriaService.buscarPorId(id);
+    async buscarPorId(@Param('id') id: number): Promise<CategoriaEntity> {
+        return await this._categoriaService.buscarPorId(id);
     }
 
     @Post()
-    crearCategoria(@Body() categoriaCrearDto: CategoriaCrearDto): Promise<CategoriaEntity> {
+    async crearCategoria(@Body() categoriaCrearDto: CategoriaCrearDto): Promise<CategoriaEntity> {
         const categoriaCrear = new CategoriaCrearDto();
         Object.keys(categoriaCrearDto).map(atributo => {
             categoriaCrear[atributo] = categoriaCrearDto[atributo];
         });
-        return this._categoriaService.crearCategoria(categoriaCrear);
+        return await this._categoriaService.crearCategoria(categoriaCrear);
     }
 
     @Put('/:id')
-    actualizarCategoria(@Param('id') id: number, @Body() categoriaActualizarDto: CategoriaActualizarDto) {
-        return this._categoriaService.actualizarCategoria(id, categoriaActualizarDto);
+    async actualizarCategoria(@Param('id') id: number, @Body() categoriaActualizarDto: CategoriaActualizarDto) {
+        return await this._categoriaService.actualizarCategoria(id, categoriaActualizarDto);
     }
 
     @Delete('/:id')
-    eliminarCategoria(@Param('id') id: number) {
-        return this._categoriaService.eliminarCategoria(id);
+    async eliminarCategoria(@Param('id') id: number) {
+        return await this._categoriaService.eliminarCategoria(id);
     }
 
     

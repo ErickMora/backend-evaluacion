@@ -16,7 +16,7 @@ export class CuestionarioService {
     }
 
     async listarCuestionarios(): Promise<CuestionarioEntity[]> {
-        return this._cuestionarioRepository.find();
+        return await this._cuestionarioRepository.find();
 
     }
 
@@ -26,9 +26,11 @@ export class CuestionarioService {
             const nuevoCuestionario = new CuestionarioEntity();
             nuevoCuestionario.titulo = cuestionarioCrearDto.titulo;
             nuevoCuestionario.codigo = cuestionarioCrearDto.codigo;
+            nuevoCuestionario.informacion = cuestionarioCrearDto.informacion;
             nuevoCuestionario.tipo = cuestionarioCrearDto.tipo;
             nuevoCuestionario.fecha = cuestionarioCrearDto.fecha;
             nuevoCuestionario.estado = cuestionarioCrearDto.estado;
+            nuevoCuestionario.periodo = cuestionarioCrearDto.periodo;
     
             try {
                 await this._cuestionarioRepository.save(this._cuestionarioRepository.create(nuevoCuestionario));
@@ -43,18 +45,20 @@ export class CuestionarioService {
 
         const id = idCuestionario;
         console.log('Cuestionario actualizado: ', id);
-        return this._cuestionarioRepository.update(idCuestionario, {
+        return await this._cuestionarioRepository.update(idCuestionario, {
 
             titulo: cuestionarioActualizarDto.titulo,
             codigo: cuestionarioActualizarDto.codigo,
+            informacion: cuestionarioActualizarDto.informacion,
             tipo: cuestionarioActualizarDto.tipo,
             fecha: cuestionarioActualizarDto.fecha,
-            estado: cuestionarioActualizarDto.estado
+            estado: cuestionarioActualizarDto.estado,
+            periodo: cuestionarioActualizarDto.periodo
         });
     }
 
     async eliminarCuestionario(idCuestionario: number): Promise<DeleteResult> {
-        return this._cuestionarioRepository.delete(idCuestionario);
+        return await this._cuestionarioRepository.delete(idCuestionario);
     }
 
     async buscar(consulta: any): Promise<CuestionarioEntity[]> {
@@ -63,28 +67,30 @@ export class CuestionarioService {
                 consulta.where[atributo] = Like(`%${consulta.where[atributo]}%`);
             });
           }
-        return this._cuestionarioRepository.find(consulta);
+        return await this._cuestionarioRepository.find(consulta);
     }
 
     async buscarPorId(idCuestionario: number): Promise<CuestionarioEntity> {
-        return this._cuestionarioRepository.findOne(idCuestionario/*, {
+        return await this._cuestionarioRepository.findOne(idCuestionario, {
             relations: [
-              'profesor',
-              'profesor.usuario',
-              'materia',
-              'cursosPorEstudiante',
-              'cursosPorEstudiante.curso',
-              'cursosPorEstudiante.estudiante',
-              'cursosPorEstudiante.estudiante.usuario'
-            ]}*/);
+              'preguntasPorCuestionario',
+              'preguntasPorCuestionario.pregunta',
+              'preguntasPorCuestionario.pregunta.indicador',
+              'preguntasPorCuestionario.cuestionario',
+              'cuestionariosPorUsuario',
+              'cuestionariosPorUsuario.cuestionario',
+              'cuestionariosPorUsuario.usuario',
+              'cuestionariosPorUsuario.profesor',
+              'periodo'
+            ]});
     }
 
     async buscarCuestionarioPorCodigo(codigo: string): Promise<CuestionarioEntity> {
-        return this._cuestionarioRepository.findOne(codigo)
+        return await this._cuestionarioRepository.findOne(codigo)
     }
 
     async buscarCuestionario(codigo?: string): Promise<CuestionarioEntity> {
-        return this._cuestionarioRepository.findOne({where: {codigo: Like(`%${codigo}%`)}});
+        return await this._cuestionarioRepository.findOne({where: {codigo: Like(`%${codigo}%`)}});
     }
 
 }

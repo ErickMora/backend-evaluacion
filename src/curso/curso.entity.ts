@@ -1,5 +1,7 @@
+import { CuestionarioPorUsuarioEntity } from "src/cuestionario-por-usuario/cuestionario-por-usuario.entity";
 import { CursoPorEstudianteEntity } from "src/curso-por-estudiante/curso-por-estudiante.entity";
 import { MateriaEntity } from "src/materia/materia.entity";
+import { PeriodoEntity } from "src/periodo/periodo.entity";
 import { ProfesorEntity } from "src/profesor/profesor.entity";
 import {Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 
@@ -27,23 +29,6 @@ export class CursoEntity {
         }
     )
     nombre: string;
-
-    @Column(
-        {
-            name: 'capacidad',
-            type: 'int'
-        }
-    )
-    capacidad: number;
-
-    @Column(
-        {
-            name: 'periodo',
-            type: 'varchar',
-            length: 30
-        }
-    )
-    periodo: string;
 
     @ManyToOne(
         type => MateriaEntity, 
@@ -75,9 +60,30 @@ export class CursoEntity {
     )
     profesor: ProfesorEntity;
 
+    @ManyToOne(
+        type => PeriodoEntity, 
+        periodo => periodo.cursos, 
+        { 
+            cascade: true, 
+            onDelete: 'CASCADE' 
+        }
+    )
+    @JoinColumn(
+        { 
+            name: 'idPeriodo' 
+        }
+    )
+    periodo: PeriodoEntity;
+
     @OneToMany(
         type => CursoPorEstudianteEntity,
         cursoPorEstudiante => cursoPorEstudiante.curso,
       )
       cursosPorEstudiante: CursoPorEstudianteEntity[];
+
+    @OneToMany(
+        type => CuestionarioPorUsuarioEntity,
+        cuestionarioPorUsuario => cuestionarioPorUsuario.curso,
+      )
+      cuestionariosPorUsuario: CuestionarioPorUsuarioEntity[];
 }
